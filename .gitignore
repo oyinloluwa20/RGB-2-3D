@@ -256,3 +256,4 @@ smplify-x/DATA_FOLDER/**
 smplify-x/MODEL_FOLDER/smplh/**
 smplify-x/MODEL_FOLDER/smplx/**
 smplify-x/images/**
+smplify-x/VPOSER_FOLDER/**
