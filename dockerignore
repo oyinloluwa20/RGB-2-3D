@@ -1,0 +1,22 @@
+# Ignore virtual environments
+**/venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore git metadata
+.git
+.gitignore
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore unnecessary OpenPose build archives
+openpose/3rdparty/windows/
+*.zip
+*.tar
+*.tar.gz
+*.7z

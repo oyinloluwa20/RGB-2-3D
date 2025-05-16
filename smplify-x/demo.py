@@ -8,6 +8,7 @@ import cv2
 import shutil
 import warnings
 from PIL import Image
+import platform
 
 warnings.filterwarnings("ignore")
 
@@ -45,7 +46,13 @@ def run_openpose(image_file=None, image_output_dir="../openpose/DATA_FOLDER/imag
             f.write(image_file.getbuffer())
     
     openpose_root = os.path.join('..', 'openpose')
-    command = f"cd {openpose_root} && .\\build\\x64\\Release\\OpenPoseDemo.exe --image_dir {image_output_dir} --hand --face --write_json {keypoints_output_dir}"
+    # command = f"cd {openpose_root} && .\\build\\x64\\Release\\OpenPoseDemo.exe --image_dir {image_output_dir} --hand --face --write_json {keypoints_output_dir}"
+    # command = f"cd {openpose_root} && ./build/examples/openpose/openpose.bin --image_dir {image_output_dir} --hand --face --write_json {keypoints_output_dir}"
+    if platform.system() == "Windows":
+        return f".\\build\\x64\\Release\\OpenPoseDemo.exe --image_dir {image_dir} --hand --face --write_json {keypoints_output_dir}"
+    else:
+        return f"./build/examples/openpose/openpose.bin --image_dir {image_dir} --hand --face --write_json {keypoints_output_dir}"
+
     subprocess.run(command, shell=True)
 
     return os.path.isdir(keypoints_output_dir) and os.listdir(keypoints_output_dir)
@@ -91,6 +98,10 @@ if st.button("Run") and uploaded_file is not None:
 # if st.button("3D-Demo"):
     mesh_dir = "./OUTPUT_FOLDER/meshes/"
     image_output_dir = "../openpose/DATA_FOLDER/images/"
+    # Check if the mesh directory exists
+    if not os.path.exists(mesh_dir):
+        st.error("Mesh directory does not exist. Please run the SMPLify-X process first.")
+        st.stop()
     
     # Build a mapping of folder name -> (obj_file_path, frame_file_path)
     match_dict = {}

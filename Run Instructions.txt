@@ -1,0 +1,38 @@
+## Run Instructions
+
+# Project dir structure
+RGB_to_3D_reconstruction/
+├── Dockerfile
+├── .dockerignore
+├── openpose/
+│   └── build/
+│       └── bin/
+│           └── OpenPoseDemo
+│       └── other necessary folders 
+├── smplify-x/
+│   ├── requirements.txt
+│   ├── demo.py
+│   └── other necessary folders
+
+
+- switch to Linux container
+	- right click on the docker icon at the lower right screen corner where Bluetooth is
+	- click on "switch to Linux containers.."
+- open powershell and run as administrator
+- cd to the project root directory and run the commands below
+
+
+Build the Docker image:
+docker build -t rgb-to-3d .
+
+once successful
+
+Run it:
+docker run -it --gpus all -p 8501:8501 --rm rgb-to-3d bash
+
+Inside container:
+streamlit run demo.py --server.address=0.0.0.0 --server.port=8501
+
+To test:
+paste http://localhost:8501 in your browser
+
